@@ -91,7 +91,3 @@ array(
 </ul>
 ```
 
-
-## I Love Open Source
-
-[![I Love Open Source](http://www.iloveopensource.io/images/logo-lightbg.png)](http://www.iloveopensource.io/users/FlorianKoerner)
