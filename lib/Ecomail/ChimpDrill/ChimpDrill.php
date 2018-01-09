@@ -12,6 +12,7 @@ class ChimpDrill
      */
     protected $pattern = array(
         'placeholder' => '/\*\|([A-Za-z0-9_]+)\|\*/',
+        'placeholderarray' => '/\*\|([A-Za-z0-9_]+)\[(.*)\]\|\*/',
         'if'          => '/\*\|(IF|IFNOT|ELSEIF):([A-Za-z0-9_]+)(?:[\s]*(=|!=|&gt;=|&lt;=|&gt;|&lt;)[\s]*(.+?))?\|\*/',
         'ifarray'     => '/\*\|(IF):#([A-Za-z0-9_]+)(?:[\s]*(=|!=|&gt;=|&lt;=|&gt;|&lt;)[\s]*(.+?))?\|\*/',
         'else'        => '/\*\|ELSE:\|\*/',
@@ -109,6 +110,19 @@ class ChimpDrill
     }
 
     /**
+     * Searches for a placeholder and returns the found or default value.
+     * 
+     * @param string $name
+     * @param mixed  $default
+     * 
+     * @return mixed
+     */
+    protected function getArrayPlaceholder($name, $default = null, $key)
+    {
+        return isset($this->placeholder[$name][$key]) ? $this->placeholder[$name][$key] : $default;
+    }
+
+    /**
      * @param mixed $value
      * 
      * @return mixed
@@ -187,6 +201,23 @@ class ChimpDrill
         return $this->escapeValue(
             $this->escapeValue(
                 $this->getPlaceholder(strtoupper($match[1]), '*|' . strtoupper($match[1]) . '|*')
+            )
+        );
+    }
+
+    /**
+     * Parses placeholder merge tags for array *|ARRAY[1]|*
+     * 
+     * @param array $match
+     * 
+     * @return string
+     */
+    protected function parsePlaceholderarray(array $match)
+    {
+        // Yes, double escaping is correct here
+        return $this->escapeValue(
+            $this->escapeValue(
+                $this->getArrayPlaceholder(strtoupper($match[1]), '*|' . strtoupper($match[1]) . '['.$match[2].']|*', intval($match[2]))
             )
         );
     }
