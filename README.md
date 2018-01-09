@@ -1,26 +1,11 @@
 # ChimpDrill - Merge Tag Parser
 
-[![Build Status](https://travis-ci.org/FlorianKoerner/ChimpDrill.svg)](https://travis-ci.org/FlorianKoerner/ChimpDrill)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/FlorianKoerner/ChimpDrill/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/FlorianKoerner/ChimpDrill/?branch=master)
-[![Coverage Status](https://coveralls.io/repos/FlorianKoerner/ChimpDrill/badge.png)](https://coveralls.io/r/FlorianKoerner/ChimpDrill)
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/a7a165ab-fa72-4a98-834c-1ed8896901a8/mini.png)](https://insight.sensiolabs.com/projects/a7a165ab-fa72-4a98-834c-1ed8896901a8)
-
-Parser for the merge tags syntax of [Mailchimp] and [Mandrill]. Supports
-[placeholder], [filters] and [conditions].
-
-[Mailchimp]: http://mailchimp.com
-[Mandrill]: http://mandrill.com
-[placeholder]: http://help.mandrill.com/entries/21678522-How-do-I-use-merge-tags-to-add-dynamic-content-
-[filters]: http://kb.mailchimp.com/merge-tags/all-the-merge-tags-cheatsheet#Content-encoding-merge-tags
-[conditions]: http://kb.mailchimp.com/merge-tags/how-conditional-or-smart-merge-tags-work
-
-
 ## Installation
 
 Download ChimpDrill by using [composer](https://getcomposer.org):
 
 ``` bash
-php composer.phar require florian-koerner/chimpdrill:dev-master
+php composer.phar require ecomail/chimpdrill:dev-master
 ```
 
 Or add the code below to your `composer.json`:
@@ -28,7 +13,7 @@ Or add the code below to your `composer.json`:
 ``` json
 {
     "require": {
-        "florian-koerner/chimpdrill": "dev-master"
+        "ecomail/chimpdrill": "dev-master"
     }
 }
 ```
@@ -37,7 +22,7 @@ Or add the code below to your `composer.json`:
 ## Usage
 
 ``` php
-$chimpdrill = new \FlorianKoerner\ChimpDrill\ChimpDrill($message, $placeholder);
+$chimpdrill = new \Ecomail\ChimpDrill\ChimpDrill($message, $placeholder);
 
 var_dump((string) $chimpdrill);
 // or
