@@ -1,5 +1,5 @@
 {
-    "name": "florian-koerner/chimpdrill",
+    "name": "ecomailcz/chimpdrill",
     "description": "Simple Mailchimp / Mandrill Merge Tags Parser",
     "require": {
         "php": ">= 5.3.2"
@@ -11,12 +11,12 @@
     "license": "CC0-1.0",
     "authors": [
         {
-            "name": "Florian Körner",
-            "email": "opensource@florian-koerner.com"
+            "name": "Ecomail",
+            "email": "support@ecomail.cz"
         }
     ],
     "autoload": {
-        "psr-0": { "FlorianKoerner\\ChimpDrill": "lib" }
+        "psr-0": { "Ecomail\\ChimpDrill": "lib" }
     },
     "minimum-stability": "stable"
 }
