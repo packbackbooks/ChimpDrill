@@ -1,8 +1,8 @@
 <?php
 
-namespace FlorianKoerner\ChimpDrill\Tests;
+namespace Ecomail\ChimpDrill\Tests;
 
-use FlorianKoerner\ChimpDrill\ChimpDrill;
+use Ecomail\ChimpDrill\ChimpDrill;
 
 class ConditionTest extends \PHPUnit_Framework_TestCase
 {

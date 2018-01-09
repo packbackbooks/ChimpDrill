@@ -3,7 +3,7 @@
 
     <testsuites>
         <testsuite name="default">
-            <directory>./lib/FlorianKoerner/ChimpDrill/Tests</directory>
+            <directory>./lib/Ecomail/ChimpDrill/Tests</directory>
         </testsuite>
     </testsuites>
 

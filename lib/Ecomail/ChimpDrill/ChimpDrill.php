@@ -1,6 +1,6 @@
 <?php
 
-namespace FlorianKoerner\ChimpDrill;
+namespace Ecomail\ChimpDrill;
 
 /**
  * ChimpDrill a simple mailchimp / mandrill merge tags parser
@@ -13,6 +13,7 @@ class ChimpDrill
     protected $pattern = array(
         'placeholder' => '/\*\|([A-Za-z0-9_]+)\|\*/',
         'if'          => '/\*\|(IF|IFNOT|ELSEIF):([A-Za-z0-9_]+)(?:[\s]*(=|!=|&gt;=|&lt;=|&gt;|&lt;)[\s]*(.+?))?\|\*/',
+        'ifarray'     => '/\*\|(IF):#([A-Za-z0-9_]+)(?:[\s]*(=|!=|&gt;=|&lt;=|&gt;|&lt;)[\s]*(.+?))?\|\*/',
         'else'        => '/\*\|ELSE:\|\*/',
         'endif'       => '/\*\|END:IF\|\*/',
         'filter'      => '/\*\|(HTML|TITLE|LOWER|UPPER):([A-Za-z0-9_]+)\|\*/',
@@ -41,7 +42,7 @@ class ChimpDrill
     public function __construct($message, array $placeholder)
     {
         $this->message = $message;
-        $this->placeholder = $placeholder;
+        $this->placeholder = array_change_key_case($placeholder, CASE_UPPER);
     }
 
     /**
@@ -185,7 +186,7 @@ class ChimpDrill
         // Yes, double escaping is correct here
         return $this->escapeValue(
             $this->escapeValue(
-                $this->getPlaceholder($match[1], '*|' . $match[1] . '|*')
+                $this->getPlaceholder(strtoupper($match[1]), '*|' . strtoupper($match[1]) . '|*')
             )
         );
     }
@@ -203,6 +204,35 @@ class ChimpDrill
 
         if (count($match) == 5) {
             $condition = $this->compare($condition, $this->unescapeValue($match[3]), $this->getPlaceholder($match[4], $match[4]));
+        } else {
+            $condition = (bool) $condition;
+        }
+
+        switch ($match[1]) {
+            case 'IF':
+                return '<?php if (' . $this->exportValue($condition) . '): ?>';
+
+            case 'ELSEIF':
+                return '<?php elseif (' . $this->exportValue($condition) . '): ?>';
+
+            case 'IFNOT':
+                return '<?php if (!' . $this->exportValue($condition) . '): ?>';
+        }
+    }
+
+    /**
+     * Parses `IF:#ARRAY` conditional merge tags.
+     *
+     * @param array $match
+     * 
+     * @return string
+     */
+    protected function parseIfArray(array $match)
+    {
+        $condition = $this->getPlaceholder($match[2]);
+
+        if (count($match) == 5) {
+            $condition = $this->compare(sizeof($condition), $this->unescapeValue($match[3]), $this->getPlaceholder($match[4], $match[4]));
         } else {
             $condition = (bool) $condition;
         }

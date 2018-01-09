@@ -1,8 +1,8 @@
 <?php
 
-namespace FlorianKoerner\ChimpDrill\Tests;
+namespace Ecomail\ChimpDrill\Tests;
 
-use FlorianKoerner\ChimpDrill\ChimpDrill;
+use Ecomail\ChimpDrill\ChimpDrill;
 
 /**
  * Test placeholder merge tags
@@ -17,6 +17,20 @@ class PlaceholderTest extends \PHPUnit_Framework_TestCase
         return array(
             array(
                 'message' => 'Hello *|BEST_FRIEND|*',
+                'placeholder' => array(
+                    'BEST_FRIEND' => 'John Doe'
+                ),
+                'expected' => 'Hello John Doe'
+            ),
+            array(
+                'message' => 'Hello *|BEST_FRIEND|*',
+                'placeholder' => array(
+                    'best_friend' => 'John Doe'
+                ),
+                'expected' => 'Hello John Doe'
+            ),
+            array(
+                'message' => 'Hello *|best_friend|*',
                 'placeholder' => array(
                     'BEST_FRIEND' => 'John Doe'
                 ),
