@@ -46,6 +46,19 @@ class ArrayTest extends \PHPUnit_Framework_TestCase
                 'expected' => 'Has blabla'
             ),
             array(
+                'message' => '<a href="*|ARR[1].url|*"><img alt="*|ARR[1].name|*" src="*|ARR[1].img_url|*"></a>',
+                'placeholder' => array(
+                    'ARR' => [
+                        [
+                            'url' => 'https://url',
+                            'name' => 'Myname',
+                            'img_url' => 'https://imgurl',
+                        ],
+                    ]
+                ),
+                'expected' => '<a href="https://url"><img alt="Myname" src="https://imgurl"></a>'
+            ),
+            array(
                 'message' => 'Has *|ECM_BASKET[2].name|*',
                 'placeholder' => array(
                     'ECM_BASKET' => [

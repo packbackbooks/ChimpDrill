@@ -12,8 +12,8 @@ class ChimpDrill
      */
     protected $pattern = array(
         'placeholder' => '/\*\|([A-Za-z0-9_]+)\|\*/',
-        'placeholderarray' => '/\*\|([A-Za-z0-9_]+)\[(.*)\]\|\*/',
-        'placeholderarraywithkey' => '/\*\|([A-Za-z0-9_]+)\[(.*)\]\.([A-Za-z0-9_]+)\|\*/',
+        'placeholderarray' => '/\*\|([A-Za-z0-9_]+)\[([0-9]+)\]\|\*/',
+        'placeholderarraywithkey' => '/\*\|([A-Za-z0-9_]+)\[([0-9]+)\]\.([A-Za-z0-9_]+)\|\*/',
         'if'          => '/\*\|(IF|IFNOT|ELSEIF):([A-Za-z0-9_]+)(?:[\s]*(=|!=|&gt;=|&lt;=|&gt;|&lt;)[\s]*(.+?))?\|\*/',
         'ifarray'     => '/\*\|(IF):#([A-Za-z0-9_]+)(?:[\s]*(=|!=|&gt;=|&lt;=|&gt;|&lt;)[\s]*(.+?))?\|\*/',
         'else'        => '/\*\|ELSE:\|\*/',
