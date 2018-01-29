@@ -13,6 +13,7 @@ class ChimpDrill
     protected $pattern = array(
         'placeholder' => '/\*\|([A-Za-z0-9_]+)\|\*/',
         'placeholderarray' => '/\*\|([A-Za-z0-9_]+)\[(.*)\]\|\*/',
+        'placeholderarraywithkey' => '/\*\|([A-Za-z0-9_]+)\[(.*)\]\.([A-Za-z0-9_]+)\|\*/',
         'if'          => '/\*\|(IF|IFNOT|ELSEIF):([A-Za-z0-9_]+)(?:[\s]*(=|!=|&gt;=|&lt;=|&gt;|&lt;)[\s]*(.+?))?\|\*/',
         'ifarray'     => '/\*\|(IF):#([A-Za-z0-9_]+)(?:[\s]*(=|!=|&gt;=|&lt;=|&gt;|&lt;)[\s]*(.+?))?\|\*/',
         'else'        => '/\*\|ELSE:\|\*/',
@@ -119,7 +120,26 @@ class ChimpDrill
      */
     protected function getArrayPlaceholder($name, $default = null, $key)
     {
+        if(is_int($key)) {
+            $key = $key - 1;
+        }
         return isset($this->placeholder[$name][$key]) ? $this->placeholder[$name][$key] : $default;
+    }
+
+    /**
+     * Searches for a placeholder and returns the found or default value.
+     * 
+     * @param string $name
+     * @param mixed  $default
+     * 
+     * @return mixed
+     */
+    protected function getArrayPlaceholderWithKey($name, $default = null, $index, $key)
+    {
+        if(is_int($index)) {
+            $index = $index - 1;
+        }
+        return isset($this->placeholder[$name][$index][$key]) ? $this->placeholder[$name][$index][$key] : $default;
     }
 
     /**
@@ -218,6 +238,23 @@ class ChimpDrill
         return $this->escapeValue(
             $this->escapeValue(
                 $this->getArrayPlaceholder(strtoupper($match[1]), '*|' . strtoupper($match[1]) . '['.$match[2].']|*', intval($match[2]))
+            )
+        );
+    }
+
+    /**
+     * Parses placeholder merge tags for array *|ARRAY[1].key|*
+     * 
+     * @param array $match
+     * 
+     * @return string
+     */
+    protected function parsePlaceholderarraywithkey(array $match)
+    {
+        // Yes, double escaping is correct here
+        return $this->escapeValue(
+            $this->escapeValue(
+                $this->getArrayPlaceholderWithKey(strtoupper($match[1]), '*|' . strtoupper($match[1]) . '['.$match[2].']|*', intval($match[2]), $match[3])
             )
         );
     }

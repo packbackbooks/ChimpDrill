@@ -43,6 +43,16 @@ class ArrayTest extends \PHPUnit_Framework_TestCase
                 'placeholder' => array(
                     'ECM_BASKET' => ['blabla', 'something']
                 ),
+                'expected' => 'Has blabla'
+            ),
+            array(
+                'message' => 'Has *|ECM_BASKET[2].name|*',
+                'placeholder' => array(
+                    'ECM_BASKET' => [
+                        ['name' => 'blabla'],
+                        ['name' => 'something']
+                    ]
+                ),
                 'expected' => 'Has something'
             )
         );
