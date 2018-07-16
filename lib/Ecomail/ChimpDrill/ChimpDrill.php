@@ -15,7 +15,7 @@ class ChimpDrill
         'placeholderarray' => '/\*\|([A-Za-z0-9_]+)\[([0-9]+)\]\|\*/',
         'placeholderarraywithkey' => '/\*\|([A-Za-z0-9_]+)\[([0-9]+)\]\.([A-Za-z0-9_]+)\|\*/',
         'if'          => '/\*\|(IF|IFNOT|ELSEIF):([A-Za-z0-9_]+)(?:[\s]*(=|!=|&gt;=|&lt;=|&gt;|&lt;)[\s]*(.+?))?\|\*/',
-        'ifarray'     => '/\*\|(IF):#([A-Za-z0-9_]+)(?:[\s]*(=|!=|&gt;=|&lt;=|&gt;|&lt;)[\s]*(.+?))?\|\*/',
+        'ifarray'     => '/\*\|(IF|ELSEIF):#([A-Za-z0-9_]+)(?:[\s]*(=|!=|&gt;=|&lt;=|&gt;|&lt;)[\s]*(.+?))?\|\*/',
         'else'        => '/\*\|ELSE:\|\*/',
         'endif'       => '/\*\|END:IF\|\*/',
         'filter'      => '/\*\|(HTML|TITLE|LOWER|UPPER):([A-Za-z0-9_]+)\|\*/',
