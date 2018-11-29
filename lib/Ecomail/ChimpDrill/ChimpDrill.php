@@ -219,9 +219,7 @@ class ChimpDrill
     {
         // Yes, double escaping is correct here
         return $this->escapeValue(
-            $this->escapeValue(
-                $this->getPlaceholder(strtoupper($match[1]), '*|' . strtoupper($match[1]) . '|*')
-            )
+            $this->getPlaceholder(strtoupper($match[1]), '*|' . strtoupper($match[1]) . '|*')
         );
     }
 
@@ -236,9 +234,7 @@ class ChimpDrill
     {
         // Yes, double escaping is correct here
         return $this->escapeValue(
-            $this->escapeValue(
-                $this->getArrayPlaceholder(strtoupper($match[1]), '*|' . strtoupper($match[1]) . '['.$match[2].']|*', intval($match[2]))
-            )
+            $this->getArrayPlaceholder(strtoupper($match[1]), '*|' . strtoupper($match[1]) . '['.$match[2].']|*', intval($match[2]))
         );
     }
 
@@ -253,9 +249,7 @@ class ChimpDrill
     {
         // Yes, double escaping is correct here
         return $this->escapeValue(
-            $this->escapeValue(
-                $this->getArrayPlaceholderWithKey(strtoupper($match[1]), '*|' . strtoupper($match[1]) . '['.$match[2].']|*', intval($match[2]), $match[3])
-            )
+            $this->getArrayPlaceholderWithKey(strtoupper($match[1]), '*|' . strtoupper($match[1]) . '['.$match[2].']|*', intval($match[2]), $match[3])
         );
     }
 
