@@ -267,11 +267,7 @@ class ChimpDrill
         if (count($match) == 5) {
             $condition = $this->compare($condition, $this->unescapeValue($match[3]), $this->getPlaceholder($match[4], $match[4]));
         } else {
-            if($condition === 0) {
-                $condition = true;
-            } else {
-                $condition = (bool) $condition;
-            }
+            $condition = (bool) $condition;
         }
 
         switch ($match[1]) {
