@@ -15,7 +15,7 @@ class ChimpDrill
         'placeholderarray' => '/\*\|([A-Za-z0-9_]+)\[([0-9]+)\]\|\*/',
         'placeholderarraywithkey' => '/\*\|([A-Za-z0-9_]+)\[([0-9]+)\]\.([A-Za-z0-9_]+)\|\*/',
         'if'          => '/\*\|(IF|IFNOT|ELSEIF):([A-Za-z0-9_]+)(?:[\s]*(=|!=|&gt;=|&lt;=|&gt;|&lt;)[\s]*(.+?))?\|\*/',
-        'ifarray'     => '/\*\|(IF):#([A-Za-z0-9_]+)(?:[\s]*(=|!=|&gt;=|&lt;=|&gt;|&lt;)[\s]*(.+?))?\|\*/',
+        'ifarray'     => '/\*\|(IF|ELSEIF):#([A-Za-z0-9_]+)(?:[\s]*(=|!=|&gt;=|&lt;=|&gt;|&lt;)[\s]*(.+?))?\|\*/',
         'else'        => '/\*\|ELSE:\|\*/',
         'endif'       => '/\*\|END:IF\|\*/',
         'filter'      => '/\*\|(HTML|TITLE|LOWER|UPPER):([A-Za-z0-9_]+)\|\*/',
@@ -219,9 +219,7 @@ class ChimpDrill
     {
         // Yes, double escaping is correct here
         return $this->escapeValue(
-            $this->escapeValue(
-                $this->getPlaceholder(strtoupper($match[1]), '*|' . strtoupper($match[1]) . '|*')
-            )
+            $this->getPlaceholder(strtoupper($match[1]), '*|' . strtoupper($match[1]) . '|*')
         );
     }
 
@@ -236,9 +234,7 @@ class ChimpDrill
     {
         // Yes, double escaping is correct here
         return $this->escapeValue(
-            $this->escapeValue(
-                $this->getArrayPlaceholder(strtoupper($match[1]), '*|' . strtoupper($match[1]) . '['.$match[2].']|*', intval($match[2]))
-            )
+            $this->getArrayPlaceholder(strtoupper($match[1]), '*|' . strtoupper($match[1]) . '['.$match[2].']|*', intval($match[2]))
         );
     }
 
@@ -253,9 +249,7 @@ class ChimpDrill
     {
         // Yes, double escaping is correct here
         return $this->escapeValue(
-            $this->escapeValue(
-                $this->getArrayPlaceholderWithKey(strtoupper($match[1]), '*|' . strtoupper($match[1]) . '['.$match[2].']|*', intval($match[2]), $match[3])
-            )
+            $this->getArrayPlaceholderWithKey(strtoupper($match[1]), '*|' . strtoupper($match[1]) . '['.$match[2].']|*', intval($match[2]), $match[3])
         );
     }
 
