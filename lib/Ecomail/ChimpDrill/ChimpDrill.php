@@ -85,7 +85,7 @@ class ChimpDrill
             }
 
             // Write file
-            $file = tempnam('/tmp', 'chimpdrill-');
+            $file = tempnam(storage_path('temp'), 'chimpdrill-');
 
             file_put_contents($file, '<?php ob_start(); ?>' . $message . '<?php return ob_get_clean(); ?>');
 
