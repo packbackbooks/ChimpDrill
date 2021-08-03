@@ -19,7 +19,8 @@ class ChimpDrill
         'else'        => '/\*\|ELSE:\|\*/',
         'endif'       => '/\*\|END:IF\|\*/',
         'filter'      => '/\*\|(HTML|TITLE|LOWER|UPPER):([A-Za-z0-9_]+)\|\*/',
-        'date'        => '/\*\|DATE:(.+?)\|\*/'
+        'date'        => '/\*\|DATE:(.+?)\|\*/',
+        'ifarraynew'  => '/\*\|(IF|ELSEIF):([A-Za-z0-9_\[\]]+)(?:[\s]*(=|!=|&gt;=|&lt;=|&gt;|&lt;)[\s]*(.+?))?\|\*/',
     );
 
     /**
@@ -265,7 +266,11 @@ class ChimpDrill
         $condition = $this->getPlaceholder($match[2]);
 
         if (count($match) == 5) {
-            $condition = $this->compare($condition, $this->unescapeValue($match[3]), $this->getPlaceholder($match[4], $match[4]));
+            if (is_array($condition)){
+                $condition = $this->compare(sizeof($condition), $this->unescapeValue($match[3]), $this->getPlaceholder($match[4], $match[4]));
+            } else {
+                $condition = $this->compare($condition, $this->unescapeValue($match[3]), $this->getPlaceholder($match[4], $match[4]));
+            }
         } else {
             $condition = (bool) $condition;
         }
@@ -294,7 +299,11 @@ class ChimpDrill
         $condition = $this->getPlaceholder($match[2]);
 
         if (count($match) == 5) {
-            $condition = $this->compare(sizeof($condition), $this->unescapeValue($match[3]), $this->getPlaceholder($match[4], $match[4]));
+            if (is_array($condition)){
+                $condition = $this->compare(sizeof($condition), $this->unescapeValue($match[3]), $this->getPlaceholder($match[4], $match[4]));
+            } else {
+                $condition = $this->compare($condition, $this->unescapeValue($match[3]), $this->getPlaceholder($match[4], $match[4]));
+            }
         } else {
             $condition = (bool) $condition;
         }
@@ -367,5 +376,40 @@ class ChimpDrill
     protected function parseDate(array $match)
     {
         return date($match[1] ?: 'Y-m-d');
+    }
+
+    /**
+     * Parses `IF:ARRAY` conditional merge tags.
+     *
+     * @param array $match
+     *
+     * @return string
+     */
+    protected function parseIfArrayNew(array $match)
+    {
+        $arrayKey = preg_match('#\[(.*?)\]#', $match[2]);
+
+        $condition = $this->getArrayPlaceholder(explode('[', $match[2])[0], null, $arrayKey);
+
+        if (count($match) == 5) {
+            if (is_array($condition)){
+                $condition = $this->compare(sizeof($condition), $this->unescapeValue($match[3]), $this->getPlaceholder($match[4], $match[4]));
+            } else {
+                $condition = $this->compare($condition, $this->unescapeValue($match[3]), $this->getPlaceholder($match[4], $match[4]));
+            }
+        } else {
+            $condition = (bool) $condition;
+        }
+
+        switch ($match[1]) {
+            case 'IF':
+                return '<?php if (' . $this->exportValue($condition) . '): ?>';
+
+            case 'ELSEIF':
+                return '<?php elseif (' . $this->exportValue($condition) . '): ?>';
+
+            case 'IFNOT':
+                return '<?php if (!' . $this->exportValue($condition) . '): ?>';
+        }
     }
 }
