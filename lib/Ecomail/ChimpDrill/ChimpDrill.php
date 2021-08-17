@@ -85,8 +85,7 @@ class ChimpDrill
                 $message = preg_replace_callback($pattern, array($this, $method), $message);
             }
 
-            // Write file
-            $file = tempnam(storage_path('temp'), 'chimpdrill-');
+            $file = @tempnam(storage_path('temp'), 'chimpdrill-');
 
             file_put_contents($file, '<?php ob_start(); ?>' . $message . '<?php return ob_get_clean(); ?>');
 
@@ -119,7 +118,7 @@ class ChimpDrill
      * 
      * @return mixed
      */
-    protected function getArrayPlaceholder($name, $default = null, $key)
+    protected function getArrayPlaceholder($name, $default = null, $key = null)
     {
         if(is_int($key)) {
             $key = $key - 1;
@@ -135,7 +134,7 @@ class ChimpDrill
      * 
      * @return mixed
      */
-    protected function getArrayPlaceholderWithKey($name, $default = null, $index, $key)
+    protected function getArrayPlaceholderWithKey($name, $default = null, $index = null, $key = null)
     {
         if(is_int($index)) {
             $index = $index - 1;
