@@ -188,6 +188,9 @@ class ChimpDrill
      */
     protected function compare($val1, $operator, $val2)
     {
+        $val1 = mb_strtolower($val1);
+        $val2 = mb_strtolower($val2);
+
         switch ($operator) {
             case '=':
                 return ($val1 == $val2);
