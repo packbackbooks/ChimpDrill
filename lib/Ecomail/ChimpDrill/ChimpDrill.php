@@ -188,8 +188,8 @@ class ChimpDrill
      */
     protected function compare($val1, $operator, $val2)
     {
-        $val1 = mb_strtolower($val1);
-        $val2 = mb_strtolower($val2);
+        $val1 = strtolower($val1);
+        $val2 = strtolower($val2);
 
         switch ($operator) {
             case '=':
@@ -267,6 +267,10 @@ class ChimpDrill
     protected function parseIf(array $match)
     {
         $condition = $this->getPlaceholder($match[2]);
+
+        if (!$condition){
+            $condition = $this->getPlaceholder(strtoupper($match[2]));
+        }
 
         if (count($match) == 5) {
             if (is_array($condition)){
