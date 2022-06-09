@@ -162,6 +162,10 @@ class ChimpDrill
      */
     protected function escapeValue($value)
     {
+        if(is_array($value)) {
+            $value = json_encode($value);
+        }
+        
         return htmlspecialchars($value, null, 'UTF-8');
     }
 
