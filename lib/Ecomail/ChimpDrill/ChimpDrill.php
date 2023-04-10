@@ -162,6 +162,10 @@ class ChimpDrill
      */
     protected function escapeValue($value)
     {
+        if(is_array($value)) {
+            $value = json_encode($value);
+        }
+        
         return htmlspecialchars($value, null, 'UTF-8');
     }
 
@@ -188,6 +192,9 @@ class ChimpDrill
      */
     protected function compare($val1, $operator, $val2)
     {
+        $val1 = strtolower($val1);
+        $val2 = strtolower($val2);
+
         switch ($operator) {
             case '=':
                 return ($val1 == $val2);
@@ -264,6 +271,10 @@ class ChimpDrill
     protected function parseIf(array $match)
     {
         $condition = $this->getPlaceholder($match[2]);
+
+        if (!$condition){
+            $condition = $this->getPlaceholder(strtoupper($match[2]));
+        }
 
         if (count($match) == 5) {
             if (is_array($condition)){
