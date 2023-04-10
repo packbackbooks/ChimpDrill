@@ -86,7 +86,7 @@ class ChimpDrill
             }
 
             // Write file
-            $file = tempnam(env('APP_TMP_PATH') !== null ? env('APP_TMP_PATH') : sys_get_temp_dir(), 'chimpdrill-');
+            $file = tempnam(env('APP_TMP_PATH', sys_get_temp_dir()), 'chimpdrill-');
 
             file_put_contents($file, '<?php ob_start(); ?>' . $message . '<?php return ob_get_clean(); ?>');
 
